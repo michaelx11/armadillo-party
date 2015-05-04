@@ -1,0 +1,136 @@
+pragma options "--bnd-unroll-amnt 10"; 
+
+int MAX_LENGTH = 8;
+
+generator bit genBase(int[MAX_LENGTH] arr, int length) {
+  int t = ??;
+  if (t == 0) {
+    return length < ??(4);
+  } else if (t == 1) {
+    return genRule(arr, length);
+  } else if (t == 2) {
+    return arr[length - 1] < ??(5);
+  }
+}
+
+generator bit genCheckLetter(int v) {
+  int t = ??;
+  if (t == 0) {
+    return v < ??(5);
+  } else if (t == 1) {
+    return ((v == 0) || (v == 4) || (v == 8) || (v == 14) || (v == 20));
+  }
+}
+
+bit checkPred(int v) {
+  return genCheckLetter(v);
+}
+
+bit checkIndex(int index, int length) {
+  return indexPred(index, length, 2);
+}
+
+generator bit genRule(int[MAX_LENGTH] arr, int length) {
+//  bit pred = indexPred(0, length, 2);
+  for (int i = 0; i < length; i++) {
+    if (checkIndex(i, length)) {
+      if (!checkPred(arr[i])) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+// TODO: Write a generator that creates expressions over any subset of indices
+generator bit indexPred(int index, int length, int bnd) {
+  int choice = ??;
+  if (bnd == 0 || choice == 0) {
+    return indexPredBase(index, length);
+  } else {
+    bit pred1 = indexPred(index, length, bnd - 1);
+    if (choice == 1) {
+      return !pred1;
+    }
+    bit pred2 = indexPred(index, length, bnd - 1);
+    if (choice == 2) {
+      return pred1 || pred2;
+    } else if (choice == 3) {
+      return pred1 && pred2;
+    }
+  } 
+}
+
+// TODO: Write a generator that creates predicates that selects indices in order
+generator bit indexPredBase(int index, int length) {
+  int choice = ??;
+  if (choice == 0) {
+    return index == 0;
+  } else if (choice == 1) { 
+    return index == length - 1;
+  } else if (choice == 2) {
+    return index % ??(3) == 0;
+  } else if (choice == 3) {
+    return index < ??(3);
+  }
+}
+
+
+//Your code goes here.
+generator bit genPred(int[MAX_LENGTH] arr, int length, int bnd) {
+  int choice = ??;
+  if (bnd == 0 || choice == 0) {
+    return genBase(arr, length);
+  } else {
+    bit pred1 = genPred(arr, length, bnd - 1);
+    if (choice == 1) {
+      return !pred1;
+    }
+    bit pred2 = genPred(arr, length, bnd - 1);
+    if (choice == 2) {
+      return pred1 || pred2;
+    } else if (choice == 3) {
+      return pred1 && pred2;
+    }
+  } 
+}
+
+
+bit rule(int[MAX_LENGTH] input, int length) {
+  return genPred(input, length, 3);
+}
+
+/*
+harness void test1() {
+  int[MAX_LENGTH] inp1 = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  int[MAX_LENGTH] inp2 = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  int[MAX_LENGTH] inp3 = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  assert(rule(inp1, 2));
+  assert(rule(inp2, 3));
+  assert(!rule(inp3, 4));
+}
+*/
+
+/*
+harness void test2() {
+  int[MAX_LENGTH] inp1 = {3, 0, 0, 0, 0, 0, 0, 0};
+  int[MAX_LENGTH] inp2 = {10, 0, 0, 0, 0, 0, 0, 0};
+  int[MAX_LENGTH] inp3 = {20, 0, 0, 0, 0, 0, 0, 0};
+  assert(rule(inp1, 5));
+  assert(rule(inp2, 5));
+  assert(!rule(inp3, 5));
+}
+*/
+
+harness void test3() {
+  int[MAX_LENGTH] inp1 = {3, 3, 3, 0, 0, 0, 0, 0};
+  int[MAX_LENGTH] inp2 = {3, 3, 10, 0, 0, 0, 0, 0};
+  int[MAX_LENGTH] inp3 = {20, 20, 0, 0, 0, 0, 0, 0};
+  int[MAX_LENGTH] inp4 = {3, 3, 3, 20, 0, 0, 0, 0};
+  int[MAX_LENGTH] inp5 = {3, 3, 3, 20, 20, 0, 0, 0};
+  assert(rule(inp1, 5));
+  assert(!rule(inp2, 5));
+  assert(!rule(inp3, 5));
+  assert(rule(inp4, 5));
+  assert(rule(inp5, 5));
+}
