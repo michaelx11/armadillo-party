@@ -47,6 +47,9 @@ function submitWord(form) {
       return false;
     });
   }
+  var blank = document.getElementById("word-blank");
+  blank.value = "";
+  return false;
 }
 
 
