@@ -1,0 +1,33 @@
+<html>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="js/main.js"></script>
+<head>
+<h1>Armadillo Party Solver!</h1>
+</head>
+
+
+<body>
+<p>
+Come up with a rule and submit a word. We'll take a guess, you can correct
+us. Within a few words we'll have your rule figured out!
+</p>
+
+<button type="button" onclick="newGame();">New Game!</button>
+
+<form action="#" onsubmit="return submitWord(this);">
+  Submit a word here!<br>
+  <input type="text" name = "word">
+  <br><br>
+  <input type = "submit" value = "Submit!">
+</form>
+
+<h4> List of results! </h4>
+<p>
+  <ol id=word-list>
+  </ol>
+</p>
+
+<button type="button" onclick="updateGame();">Update Rule!</button>
+
+</body>
+</html>
