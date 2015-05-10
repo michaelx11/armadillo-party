@@ -54,7 +54,11 @@ function submitWord(form) {
 
 
 function updateGame() {
-  $.get("/updategame");
+  console.log('update game');
+  document.getElementById("loading-tag").style.visibility = "visible";
+  $.get("/updategame").done(function(data) {
+    document.getElementById("loading-tag").style.visibility = "hidden";
+  });
 }
 
 function correctGuess(word, result, index) {

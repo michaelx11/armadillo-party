@@ -15,7 +15,8 @@ generator int baseCase(int[MAX_LENGTH] arr, int length) {
     } else if (new_choice == 2) {
       return ((arr[index] == 0) || (arr[index] == 4) || (arr[index] == 8) || (arr[index] == 14) || (arr[index] == 20));
     } else if (new_choice == 3) {
-      return arr[length - 1];
+      return arr[length - index];
+    } else if (new_choice == 4) {
     }
     return arr[index];
   } else if (choice == 1) {

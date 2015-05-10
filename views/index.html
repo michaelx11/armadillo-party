@@ -16,7 +16,7 @@ us. Within a few words we'll have your rule figured out!
 
 <form action="#" onsubmit="return submitWord(this);">
   Submit a word here!<br>
-  <input type="text" name = "word">
+  <input type="text" name = "word" id=word-blank>
   <br><br>
   <input type = "submit" value = "Submit!">
 </form>
@@ -28,6 +28,8 @@ us. Within a few words we'll have your rule figured out!
 </p>
 
 <button type="button" onclick="updateGame();">Update Rule!</button>
+
+<h1 id="loading-tag" style="visibility:hidden">LOADING...</h1>
 
 </body>
 </html>
