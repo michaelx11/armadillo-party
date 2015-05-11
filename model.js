@@ -30,10 +30,13 @@ firebase.addWord(0, 'hello', function(wordIndex, error) {
 firebase.updateWordResult(0, 0, 'yes', function(error) {
 });
 */
+exec('mkdir -p sketches');
+exec('mkdir -p sketch_output');
+exec('mkdir -p rule_programs');
 
 var SKETCH_ENV = process.env;
-SKETCH_ENV['SKETCH_HOME'] = '/home/michaelx/6.885/sketch-1.6.9/sketch-frontend/runtime';
-SKETCH_ENV['PATH'] += ':/home/michaelx/6.885/sketch-1.6.9/sketch-frontend';
+SKETCH_ENV['SKETCH_HOME'] = '/home/ubuntu/6.885/sketch-1.6.9/sketch-frontend/runtime';
+SKETCH_ENV['PATH'] += ':/home/ubuntu/6.885/sketch-1.6.9/sketch-frontend';
 function runSketch(gameObj, cbError) {
   // This step is necessary to determine the number of valid test cases
   // [{word: hello, result: yes}, {...}, ...]

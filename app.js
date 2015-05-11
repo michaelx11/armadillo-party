@@ -24,7 +24,7 @@ passport.use(new LocalStrategy(
 
 var app = express();
 
-app.set('port', 9010);
+app.set('port', 80);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
 app.engine('html', require('hbs').__express);

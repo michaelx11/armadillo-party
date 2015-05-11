@@ -2,23 +2,26 @@ pragma options "--bnd-unroll-amnt 10";
 
 int MAX_LENGTH = 8;
 
+bit isVowel(int value) {
+  return (value == 0) || (value == 4) || (value == 8) || (value == 14) || (value == 20);
+}
+
 generator int baseCase(int[MAX_LENGTH] arr, int length) {
   int choice = ??;
   if (choice == 0) {
     int index = ??(3);
-    assume index < length;
     int new_choice = ??;
     if (new_choice == 0) {
       return arr[index];
     } else if (new_choice == 1) {
-      return arr[index] % ??(2);
+      return index % ??(2);
     } else if (new_choice == 2) {
-      return ((arr[index] == 0) || (arr[index] == 4) || (arr[index] == 8) || (arr[index] == 14) || (arr[index] == 20));
+      return isVowel(arr[index]);
     } else if (new_choice == 3) {
       return arr[length - index];
     } else if (new_choice == 4) {
+      return isVowel(arr[length - index]);
     }
-    return arr[index];
   } else if (choice == 1) {
     int value = ??(5);
     assume value < 26;
@@ -34,25 +37,25 @@ generator bit genPred(int[MAX_LENGTH] arr, int length, int bnd) {
     int base1 = baseCase(arr, length);
     int base2 = baseCase(arr, length);
     if(??(1)) {
-      return base1 < base2;
+      return (base1 < base2);
     } else {
-      return base1 == base2;
+      return (base1 == base2);
     }
   } else {
     bit pred1 = genPred(arr, length, bnd - 1);
     if (choice == 1) {
-      return !pred1;
+      return (!pred1);
     }
     bit pred2 = genPred(arr, length, bnd - 1);
     if (choice == 2) {
-      return pred1 || pred2;
+      return (pred1 || pred2);
     } else if (choice == 3) {
-      return pred1 && pred2;
+      return (pred1 && pred2);
     }
   } 
 }
 
 
 bit rule(int[MAX_LENGTH] input, int length) {
-  return genPred(input, length, 4);
+  return genPred(input, length, 3);
 }
