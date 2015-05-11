@@ -1,35 +1,43 @@
 <html>
+<link rel="stylesheet" type="text/css" href="/css/main.css"/>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="js/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/main.js"></script>
-<head>
-<h1>Picnic Game Solver</h1>
-</head>
-
-
 <body>
+<div id="header">
+<h1>Picnic Game Solver</h1>
 <p>
 Come up with a rule and submit a word. We'll take a guess, you can correct
 us. Within a few words we'll have your rule figured out!
 </p>
+</div>
 
+
+<div id="main-wrap">
+  <div id="sidebar">
+    <form action="#" onsubmit="return submitWord(this);">
+      Submit a word here!<br>
+      <input type="text" name = "word" id=word-blank>
+      <input type = "submit" value = "Submit!">
+    </form>
 <button type="button" onclick="newGame();">New Game!</button>
 
-<form action="#" onsubmit="return submitWord(this);">
-  Submit a word here!<br>
-  <input type="text" name = "word" id=word-blank>
-  <br><br>
-  <input type = "submit" value = "Submit!">
-</form>
+    <h4> List of results! </h4>
+    <p>
+    <ol id=word-list>
+    </ol>
+    </p>
+    <button type="button" onclick="updateGame();">Update Rule!</button>
+    <h1 id="loading-tag" style="visibility:hidden">LOADING...</h1>
+  </div>
+  <div id=content-wrap">
+    <div id="editor">
+      // Rule code goes here
+    </div>
+  </div>
+</div>
 
-<h4> List of results! </h4>
-<p>
-  <ol id=word-list>
-  </ol>
-</p>
 
-<button type="button" onclick="updateGame();">Update Rule!</button>
-
-<h1 id="loading-tag" style="visibility:hidden">LOADING...</h1>
 
 </body>
 </html>

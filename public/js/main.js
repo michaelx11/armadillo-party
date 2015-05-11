@@ -1,4 +1,10 @@
 // Main javascript functions for armadillo-party
+var editor = false
+$(document).ready(function() {
+  editor = ace.edit("editor");
+  editor.setTheme("ace/theme/monokai");
+  editor.getSession().setMode("ace/mode/c_cpp");
+});
 
 function createWordEntry(word, result, index) {
   var entry = document.createElement('li');
@@ -30,6 +36,12 @@ function getAndUpdateWordList() {
   });
 }
 
+function updateRuleDisplay() {
+  $.get('/getrule').done(function(data) {
+    editor.setValue(data);
+  });
+}
+
 function submitWord(form) {
   console.log(form);
   console.log(form.word);
@@ -39,6 +51,7 @@ function submitWord(form) {
       var list = document.getElementById("word-list");
       console.log("GOT THE WORD");
       getAndUpdateWordList();
+      updateRuleDisplay();
       /*
       console.log(list);
       list.appendChild(createWordEntry(form.word.value, data));
@@ -58,6 +71,7 @@ function updateGame() {
   document.getElementById("loading-tag").style.visibility = "visible";
   $.get("/updategame").done(function(data) {
     document.getElementById("loading-tag").style.visibility = "hidden";
+    updateRuleDisplay();
   });
 }
 
@@ -77,4 +91,5 @@ function newGame() {
   });
 }
 
+updateRuleDisplay();
 getAndUpdateWordList();

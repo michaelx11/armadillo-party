@@ -74,7 +74,9 @@ function runSketch(gameObj, cbError) {
     }
 
     console.log(stdout.toString());
-    cbError(false);
+    runRule(gameObj, "test", function(data, error) {
+      cbError(false);
+    });
   });
 }
 
@@ -91,6 +93,31 @@ function runRule(gameObj, word, cbDataError) {
     }
 
     cbDataError(stdout.toString(), false);
+  });
+}
+
+function processNewlines(str) {
+  str = str.split('--NEWLINE--').join('\n');
+  return str
+}
+
+exports.getRule = function(cbDataError) {
+  firebase.getCurrentGameIndex(function(currentGameIndex) {
+    var p = exec('python synthesizer/extract_rule.py rule' + currentGameIndex, function(err, stdout, stderr) {
+    if (err) {
+      console.log(err);
+      cbDataError(false, err);
+      return;
+    }
+
+    if (stderr) {
+      console.log(stderr.toString());
+      cbDataError(false, stderr.toString());
+      return;
+    }
+
+    cbDataError(processNewlines(stdout.toString()), false);
+    });
   });
 }
 

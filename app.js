@@ -113,6 +113,16 @@ app.get('/newgame', function(req,res) {
   });
 });
 
+app.get('/getrule', function(req, res) {
+  model.getRule(function(data, error) {
+    if (error) {
+      res.send("// Error extracting rule\n");
+    } else {
+      res.send(data);
+    }
+  });
+});
+
 /*
 app.post('/upload', function(req, res) {
   model.uploadFile(req.files.filedata, function(error, data) {

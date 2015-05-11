@@ -1,0 +1,31 @@
+#mainn-wrap > div { min-height: 450px; }
+
+
+#header {
+  text-align:center;
+  min-height: 40px;
+}
+
+/* layout */
+#main-wrap {
+    /* overflow to handle inner floating block */
+    overflow: hidden;
+}
+
+#sidebar {
+    float: left;
+    width: 20%;
+    margin-left: 20%;
+}
+
+#content-wrap {
+    float: right;
+    width: 40%;
+    margin-right: 10%;
+}  
+
+#editor {
+  position: relative;
+  height: 70%;
+  width: 40%;
+}
